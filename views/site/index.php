@@ -3,13 +3,8 @@
  * Created by PhpStorm.
  * User: Boris
  * Date: 09.10.2015
- * Time: 12:29
+ * Time: 13:16
  */
-
-class Model {
-    public $db;
-    public $table;
-
-
-
-}
+?>
+<h1>Головна сторінка </h1>
+<? ?>

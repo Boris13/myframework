@@ -7,7 +7,7 @@
  */
 /*Налаштування маршрутизації*/
 $route=[];
-$route['about']='site/index';
+$route['contact']='site/contact';
 $modules=[];
 /* файли для автозавантаження */
 $loades=[];

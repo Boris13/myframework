@@ -47,7 +47,7 @@ class Route{
         if(file_exists($file)){
             include($file);
             if(!class_exists($this->controllers)) {
-                $this->set_controller();
+                $this->get_controller();
                 $this->class=new $this->controller;
                 $this->find_method();
                 $argument=$this->argument();
@@ -55,11 +55,11 @@ class Route{
                 call_user_func_array([$this->class, $this->method], $argument);
 
             }else{
-                $this->error_404();
+                $this->error_404('Клас незнайдено');
             }
 
         }else{
-            $this->error_404();
+            $this->error_404('файл незнайдено');
         }
 
     }
@@ -67,7 +67,7 @@ class Route{
     public function find_method(){
         $action='action_'.$this->method;
         if(!method_exists($this->class, $action)){
-            $this->error_404();
+            $this->error_404('Метод незнайдено');
         }
         $this->method=$action;
     }
@@ -80,10 +80,12 @@ class Route{
         define('CONTROLLER', $this->controller);
     }
 
-    function error_404()
+    function error_404($text=NULL)
     {
         header("HTTP/1.0 404 Not Found");
-        exit("<div style='width:100%; height: 100%; ' align='center' valign='center'><h1>404 Not Found</h1></div>");
+        exit("<div style='width:100%; height: 100%; ' align='center' valign='center'><h1>404 Not Found</h1>
+<p>$text</p>
+</div>");
 
     }
 }
