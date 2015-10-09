@@ -6,4 +6,7 @@
  * Time: 11:13
  */
 header("Content-Type: text/html; charset=utf-8");
-include_once('../Route.php');
+require_once('../config.php');
+require_once(PATH_BASE.'/core/Route.php');
+$start=new Route($route);
+$start->run();

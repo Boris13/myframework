@@ -7,9 +7,9 @@
  */
 class Route{
     public $routes;
-    public $class;
-    public $method     ='index';
-    public $controller ='Site';
+    public $class; //обєк актовного контролера
+    public $method     ='index'; //метод по замовчуванні
+    public $controller ='Site';//контролер по замовчуванні
     public $url=[];
 
     public function __construct($routes){
@@ -40,6 +40,7 @@ class Route{
             $this->url=$array;
         };
     }
+    // запуск
     public function run(){
 
         $file=('../Controllers/'.$this->controller.'.php');
@@ -50,7 +51,7 @@ class Route{
                 $this->class=new $this->controller;
                 $this->find_method();
                 $argument=$this->argument();
-
+                //підставка значення в метод контролера
                 call_user_func_array([$this->class, $this->method], $argument);
 
             }else{
@@ -62,12 +63,20 @@ class Route{
         }
 
     }
+    //установка методу
+    public function find_method(){
+        $action='action_'.$this->method;
+        if(!method_exists($this->class, $action)){
+            $this->error_404();
+        }
+        $this->method=$action;
+    }
     public  function argument(){
         $argument=array_splice($this->url,2);
         return $argument;
     }
-
-    function set_controller(){
+// встановлюємо імя контролера в константу для подальшого використання
+    function get_controller(){
         define('CONTROLLER', $this->controller);
     }
 
